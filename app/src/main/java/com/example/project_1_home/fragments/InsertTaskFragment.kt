@@ -10,6 +10,7 @@ import android.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.example.project_1_home.MainActivity
 import com.example.project_1_home.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -20,14 +21,13 @@ class InsertTaskFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        (activity as MainActivity).supportActionBar!!.hide()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_insert_task, container, false)
     }
 
@@ -50,5 +50,10 @@ class InsertTaskFragment : Fragment(), View.OnClickListener {
         toolbar.setNavigationOnClickListener() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        (activity as MainActivity).supportActionBar!!.show()
     }
 }
