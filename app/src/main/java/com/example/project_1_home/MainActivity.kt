@@ -1,27 +1,36 @@
 package com.example.project_1_home
 
+import android.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.widget.FrameLayout
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.example.project_1_home.fragments.InsertTaskFragment
 import com.example.project_1_home.fragments.StatisticsFragment
 import com.example.project_1_home.fragments.TaskListFragment
+import com.example.project_1_home.`interface`.OnPassData
+import com.example.project_1_home.model.TaskModel
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnPassData {
     private lateinit var drawerLayout: DrawerLayout
     lateinit var myToolbar: androidx.appcompat.widget.Toolbar
     private lateinit var navigationView: NavigationView
     private lateinit var navController: NavController
     private lateinit var statisticsFragment: StatisticsFragment
     private lateinit var taskListFragment: TaskListFragment
+    private lateinit var insertTaskFragment: InsertTaskFragment
+    private var dataSet = mutableListOf<TaskModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.nav_view)
         statisticsFragment = StatisticsFragment()
         taskListFragment = TaskListFragment()
+        insertTaskFragment = InsertTaskFragment()
         customToolBar(myToolbar)
-
         navigationView.setNavigationItemSelectedListener() {
             when (it.itemId) {
                 R.id.nav_tasklist -> {
@@ -71,5 +80,55 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+    }
+
+    fun data(): MutableList<TaskModel> {
+        if (dataSet.isEmpty()) {
+            dataSet.apply {
+                add(
+                    TaskModel(
+                        "Learning Kotlin",
+                        "I'm learning Kotlin, do u want to learn Kotlin too?",
+                        true
+                    )
+                )
+                add(
+                    TaskModel(
+                        "Learning Java",
+                        "I'm learning Java, do u want to learn Java too?",
+                        true
+                    )
+                )
+                add(
+                    TaskModel(
+                        "Learning Android",
+                        "I'm learning Android, do u want to learn Android too?",
+                        false
+                    )
+                )
+            }
+            return dataSet
+        }
+        return dataSet
+    }
+
+    fun insert(title: String, body: String = "") {
+        dataSet.add(TaskModel(title, body, false))
+    }
+
+    fun filter(type: String): MutableList<TaskModel> {
+        if (type == "completed") {
+            return dataSet.filter { it.checkBox } as MutableList<TaskModel>
+        } else if (type == "active") {
+            return dataSet.filter { !it.checkBox } as MutableList<TaskModel>
+        }
+        return dataSet
+    }
+
+    override fun onPassData(title: String, body: String) {
+        navController.navigate(R.id.taskListFragment, Bundle().apply {
+            putString("title_key", title)
+            putString("body_key", body)
+        })
     }
 }

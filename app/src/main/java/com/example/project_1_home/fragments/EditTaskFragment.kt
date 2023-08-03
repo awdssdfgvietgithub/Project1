@@ -39,7 +39,9 @@ class EditTaskFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.fabSave1 -> requireActivity().onBackPressedDispatcher.onBackPressed()
+            R.id.fabSave1 -> {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
     }
 
