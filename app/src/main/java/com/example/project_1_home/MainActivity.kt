@@ -16,7 +16,6 @@ import com.example.project_1_home.fragments.StatisticsFragment
 import com.example.project_1_home.fragments.TaskListFragment
 import com.example.project_1_home.model.TaskModel
 import com.google.android.material.navigation.NavigationView
-import com.plattysoft.leonids.ParticleSystem
 
 class MainActivity : AppCompatActivity(), OnPassData {
     private lateinit var drawerLayout: DrawerLayout
