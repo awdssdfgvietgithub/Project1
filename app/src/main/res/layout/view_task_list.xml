@@ -26,6 +26,16 @@
             android:layout_marginStart="15dp"
             android:text="Learning Kotlin"
             android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/txtBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:text="body"
+            android:textSize="23sp"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

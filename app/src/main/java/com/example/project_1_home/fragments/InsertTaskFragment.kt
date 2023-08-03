@@ -1,25 +1,18 @@
 package com.example.project_1_home.fragments
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.project_1_home.MainActivity
 import com.example.project_1_home.R
 import com.example.project_1_home.`interface`.OnPassData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
+import com.google.android.material.snackbar.Snackbar
 
 class InsertTaskFragment : Fragment(), View.OnClickListener {
     lateinit var navController: NavController
@@ -27,20 +20,6 @@ class InsertTaskFragment : Fragment(), View.OnClickListener {
     lateinit var edtTile: EditText
     lateinit var edtBody: EditText
     private lateinit var onPassData: OnPassData
-
-//    lateinit var callBack: ActivityCallBack
-//
-//    interface ActivityCallBack {
-//        fun sendData(title: String, body: String = "")
-//    }
-//
-//    fun setActivityCallBack(callback: ActivityCallBack) {
-//        this.callBack = callback
-//    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,14 +44,27 @@ class InsertTaskFragment : Fragment(), View.OnClickListener {
         customToolBar(myToolbar)
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.fabSave -> {
-                onPassData.onPassData(edtTile.text.toString(), edtBody.text.toString())
+                if (edtTile.text.toString() == "") {
+                    val snackBar =
+                        Snackbar.make(
+                            v,
+                            "Tasks cannot be empty",
+                            Snackbar.LENGTH_SHORT
+                        )
+                    snackBar.show()
+                } else {
+                    val snackBar =
+                        Snackbar.make(
+                            v,
+                            "Task added",
+                            Snackbar.LENGTH_SHORT
+                        )
+                    snackBar.show()
+                    onPassData.onPassData(edtTile.text.toString(), edtBody.text.toString())
+                }
             }
         }
     }
@@ -86,5 +78,7 @@ class InsertTaskFragment : Fragment(), View.OnClickListener {
     override fun onPause() {
         super.onPause()
         (activity as MainActivity).supportActionBar!!.show()
+        edtTile.text.clear()
+        edtBody.text.clear()
     }
 }
