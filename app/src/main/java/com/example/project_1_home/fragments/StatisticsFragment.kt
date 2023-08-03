@@ -31,7 +31,21 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        txtPercentOfCompletedTasks = view.findViewById(R.id.txtPercentOfCompletedTasks)
+        txtPercentOfActiveTasks = view.findViewById(R.id.txtPercentOfActiveTasks)
 
+        val activity = (activity as MainActivity)
+        sizeCompleted = activity.getNumCompleted()
+        sizeActive = activity.getNumActive()
+
+        var sumSize = sizeCompleted?.let { sizeActive?.plus(it) }?.toFloat()
+        var percentSizeCompleted: Float? = sumSize?.let { sizeCompleted?.div(it) }?.times(100)
+        var percentSizeActive: Float? = sumSize?.let { sizeActive?.div(it) }?.times(100)
+
+        txtPercentOfCompletedTasks.text =
+            percentSizeCompleted?.times(10.0)?.let { Math.round(it).div(10.0).toString() } + "%"
+        txtPercentOfActiveTasks.text =
+            percentSizeActive?.times(10.0)?.let { Math.round(it).div(10.0).toString() } + "%"
     }
 
     override fun onPause() {

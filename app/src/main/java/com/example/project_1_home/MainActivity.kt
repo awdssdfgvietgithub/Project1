@@ -3,6 +3,7 @@ package com.example.project_1_home
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), OnPassData {
     private lateinit var statisticsFragment: StatisticsFragment
     private lateinit var taskListFragment: TaskListFragment
     private lateinit var insertTaskFragment: InsertTaskFragment
-    private var dataSet = mutableListOf<TaskModel>()
+    var dataSet = mutableListOf<TaskModel>()
     private var numCompleted: Float? = 0f
     private var numActive: Float? = 0f
 
@@ -58,27 +59,33 @@ class MainActivity : AppCompatActivity(), OnPassData {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.filter_all -> {
-            //filter("all")
+            navController.navigate(R.id.taskListFragment, Bundle().apply {
+                putString("filter", "filter_all")
+            })
             true
         }
         R.id.filter_active -> {
-            //filter("active")
-            //Toast.makeText(this, "filter_active", Toast.LENGTH_SHORT).show()
+            navController.navigate(R.id.taskListFragment, Bundle().apply {
+                putString("filter", "filter_active")
+            })
             true
         }
         R.id.filter_completed -> {
-            //filter("completed")
-            //Toast.makeText(this, "filter_completed", Toast.LENGTH_SHORT).show()
+            navController.navigate(R.id.taskListFragment, Bundle().apply {
+                putString("filter", "filter_completed")
+            })
             true
         }
         R.id.more_clear -> {
-            //(activity as MainActivity).removeAllTaskCompleted()
-            //Toast.makeText(this, "more_clear", Toast.LENGTH_SHORT).show()
+            navController.navigate(R.id.taskListFragment, Bundle().apply {
+                putString("more", "more_clear")
+            })
             true
         }
         R.id.more_refresh -> {
-            //(activity as MainActivity).refreshListTask()
-            //Toast.makeText(this, "more_refresh", Toast.LENGTH_SHORT).show()
+            navController.navigate(R.id.taskListFragment, Bundle().apply {
+                putString("more", "more_refresh")
+            })
             true
         }
         else -> {
@@ -135,20 +142,12 @@ class MainActivity : AppCompatActivity(), OnPassData {
     }
 
     fun insert(title: String, body: String = "") {
+        Toast.makeText(this, "$title | $body", Toast.LENGTH_SHORT).show()
         dataSet.add(TaskModel(title, body, false))
     }
 
     fun update(i: Int, title: String, body: String, checkBox: Boolean) {
         dataSet[i] = TaskModel(title, body, checkBox)
-    }
-
-    fun filter(type: String): MutableList<TaskModel> {
-        if (type == "completed") {
-            return dataSet.filter { it.checkBox } as MutableList<TaskModel>
-        } else if (type == "active") {
-            return dataSet.filter { !it.checkBox } as MutableList<TaskModel>
-        }
-        return dataSet
     }
 
     override fun onPassData(title: String, body: String) {

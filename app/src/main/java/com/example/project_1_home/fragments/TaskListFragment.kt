@@ -27,6 +27,8 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     lateinit var containerRecyclerView: ConstraintLayout
     lateinit var containerNoHaveTask: ConstraintLayout
     lateinit var layoutTaskList: ConstraintLayout
+    lateinit var itemMenuFilterClick: String
+    lateinit var itemMenuMoreClick: String
     private lateinit var onPassNumberTasks: OnPassData
     var title: String? = null
     var body: String? = null
@@ -62,9 +64,29 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         onPassNumberTasks = activity as OnPassData
         view.findViewById<FloatingActionButton>(R.id.fabAdd).setOnClickListener(this)
 
-        //ADAPTER
-        taskAdapter = TaskAdapter(dataSet)
+        itemMenuFilterClick = arguments?.getString("filter").toString()
+        this.arguments?.remove("filter")
+        itemMenuMoreClick = arguments?.getString("more").toString()
+        this.arguments?.remove("more")
+
+        //ADAPTER AND FILTER
+        Toast.makeText(requireContext(), "hi", Toast.LENGTH_SHORT).show()
         val linearLayoutManager = LinearLayoutManager(view.context)
+        var data = dataSet
+        if (itemMenuFilterClick == "filter_completed") {
+            data = dataSet.filter { it.checkBox }.toMutableList()
+        } else if (itemMenuFilterClick == "filter_active") {
+            data = dataSet.filter { !it.checkBox }.toMutableList()
+        } else if (itemMenuFilterClick == "filter_all") {
+            data = dataSet.toMutableList()
+        } else if (itemMenuMoreClick == "more_refresh") {
+        }
+        taskAdapter = TaskAdapter(data)
+        if (itemMenuMoreClick == "more_clear") {
+            var data1 = data
+            data1.removeAll { it.checkBox }
+            taskAdapter = TaskAdapter(data1)
+        }
         recyclerView.apply {
             setItemViewCacheSize(2)
             //setRecycledViewPool(5)
@@ -100,7 +122,7 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         this.arguments?.remove("update_title_key")
         this.arguments?.remove("update_body_key")
         this.arguments?.remove("update_checkbox_key")
-        if (titleUpdated != null && titleUpdated != "" && i != null && bodyUpdated != null && bodyUpdated != "") {
+        if (titleUpdated != null && titleUpdated != "") {
             checkBoxUpdated?.let {
                 (activity as MainActivity).update(
                     i!!, titleUpdated!!, bodyUpdated!!,
