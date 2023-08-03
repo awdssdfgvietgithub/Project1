@@ -77,10 +77,14 @@ class TaskAdapter(private var dataSet: List<TaskModel>) :
             } else if (!dataSet[position].checkBox) {
                 holder.title.apply {
                     paintFlags = 0
-                }.text = dataSet[position].title.lowercase()
+                }.text = dataSet[position].title
             }
             holder.check.isChecked = dataSet[position].checkBox
             holder.body.text = dataSet[position].body
         }
+    }
+
+    fun removeItem(position: Int) {
+        dataSet
     }
 }

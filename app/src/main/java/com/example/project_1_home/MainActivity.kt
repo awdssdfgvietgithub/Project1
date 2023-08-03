@@ -135,6 +135,34 @@ class MainActivity : AppCompatActivity(), OnPassData {
                         false
                     )
                 )
+                add(
+                    TaskModel(
+                        "Repair PC",
+                        "The main card was broken, stick on my mine that REPAIR IT!",
+                        false
+                    )
+                )
+                add(
+                    TaskModel(
+                        "Hangout with my budies",
+                        "I want to let my hair down after the hard-working day :(",
+                        false
+                    )
+                )
+                add(
+                    TaskModel(
+                        "Discuss the tasks with my mentor",
+                        "What's ViewModel, BindingData,...????",
+                        false
+                    )
+                )
+                add(
+                    TaskModel(
+                        "The area of circle",
+                        "A = π r²",
+                        false
+                    )
+                )
             }
             return dataSet
         }
@@ -142,7 +170,6 @@ class MainActivity : AppCompatActivity(), OnPassData {
     }
 
     fun insert(title: String, body: String = "") {
-        Toast.makeText(this, "$title | $body", Toast.LENGTH_SHORT).show()
         dataSet.add(TaskModel(title, body, false))
     }
 

@@ -70,25 +70,22 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         this.arguments?.remove("more")
 
         //ADAPTER AND FILTER
-        Toast.makeText(requireContext(), "hi", Toast.LENGTH_SHORT).show()
         val linearLayoutManager = LinearLayoutManager(view.context)
-        var data = dataSet
-        if (itemMenuFilterClick == "filter_completed") {
-            data = dataSet.filter { it.checkBox }.toMutableList()
+
+        taskAdapter = TaskAdapter(dataSet)
+        if (itemMenuFilterClick == "filter_all") {
+            taskAdapter = TaskAdapter(dataSet)
+        } else if (itemMenuFilterClick == "filter_completed") {
+            taskAdapter = TaskAdapter(dataSet.filter { it.checkBox })
         } else if (itemMenuFilterClick == "filter_active") {
-            data = dataSet.filter { !it.checkBox }.toMutableList()
-        } else if (itemMenuFilterClick == "filter_all") {
-            data = dataSet.toMutableList()
+            taskAdapter = TaskAdapter(dataSet.filter { !it.checkBox })
         } else if (itemMenuMoreClick == "more_refresh") {
-        }
-        taskAdapter = TaskAdapter(data)
-        if (itemMenuMoreClick == "more_clear") {
-            var data1 = data
-            data1.removeAll { it.checkBox }
-            taskAdapter = TaskAdapter(data1)
+            taskAdapter = TaskAdapter(dataSet)
+        } else if (itemMenuMoreClick == "more_clear") {
+            dataSet.removeAll { it.checkBox }
         }
         recyclerView.apply {
-            setItemViewCacheSize(2)
+            //setItemViewCacheSize(2)
             //setRecycledViewPool(5)
             layoutManager = linearLayoutManager
             adapter = taskAdapter
