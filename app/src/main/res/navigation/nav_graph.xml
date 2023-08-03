@@ -9,7 +9,7 @@
         android:id="@+id/taskListFragment"
         android:name="com.example.project_1_home.fragments.TaskListFragment"
         android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list" >
+        tools:layout="@layout/fragment_task_list">
         <action
             android:id="@+id/action_taskListFragment_to_insertTaskFragment"
             app:destination="@id/insertTaskFragment" />
@@ -34,7 +34,7 @@
         android:id="@+id/statisticsFragment"
         android:name="com.example.project_1_home.fragments.StatisticsFragment"
         android:label="fragment_statistics"
-        tools:layout="@layout/fragment_statistics" >
+        tools:layout="@layout/fragment_statistics">
         <action
             android:id="@+id/action_statisticsFragment_to_taskListFragment"
             app:destination="@id/taskListFragment" />

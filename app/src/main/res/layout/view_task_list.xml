@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="20dp">
 
-    <LinearLayout
-        android:id="@+id/asd"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#F8F5F5">
 
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:buttonTint="#2E7D32"
-            android:checked="true" />
-
-        <TextView
-            android:id="@+id/txtTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:text="Learning Kotlin"
-            android:textSize="23sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtBody"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:text="body"
-            android:textSize="23sp"
-            android:visibility="gone" />
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:buttonTint="#2E7D32"
+                android:checked="true" />
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:text="Learning Kotlin"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/txtBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:text="body"
+                android:textSize="23sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
